@@ -1,0 +1,129 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ------- Design tokens (used by tailwind.config colors) ------- */
+:root {
+  --font-family-primary: Inter, ui-sans-serif, system-ui, sans-serif;
+  --font-weight-regular: 500;
+  --radius: 0.75rem;
+
+  /* HSL values consumed by tailwind theme (bg-card, text-foreground, etc.) */
+  --background: 0 0% 100%;
+  --foreground: 222 47% 11%;
+
+  --card: 0 0% 100%;
+  --card-foreground: 222 47% 11%;
+
+  --popover: 0 0% 100%;
+  --popover-foreground: 222 47% 11%;
+
+  --primary: 16 100% 60%;
+  --primary-foreground: 0 0% 100%;
+
+  --secondary: 210 40% 96%;
+  --secondary-foreground: 222 47% 11%;
+
+  --muted: 210 40% 96%;
+  --muted-foreground: 215 16% 47%;
+
+  --accent: 256 100% 67%;
+  --accent-foreground: 0 0% 100%;
+
+  --destructive: 0 84% 60%;
+  --destructive-foreground: 0 0% 98%;
+
+  --border: 214 32% 91%;
+  --input: 214 32% 91%;
+  --ring: 222 84% 5%;
+
+  /* convenience */
+  --input-background: rgba(255,255,255,0.9);
+}
+
+/* App background gradient */
+html, body, #root { height: 100%; }
+body { @apply bg-gradient-to-br from-orange-400 via-rose-300 to-purple-400; }
+
+
+/* --- Calendar alignment + clickability reset --- */
+.rdp-fix {
+  --rdp-cell-size: 42px;
+  --rdp-font-family: var(--font-family-primary);
+  --rdp-caption-font-size: 16px;
+}
+
+.rdp-fix .rdp-months { justify-content: center; }
+.rdp-fix .rdp-month { margin: 0; }
+
+.rdp-fix .rdp-table {
+  margin: 0 auto;
+  border-collapse: separate;
+  border-spacing: 12px 10px; /* space between cells to match design */
+}
+
+.rdp-fix .rdp-head_cell {
+  text-align: center;
+  font-weight: 700;
+  color: var(--muted-foreground);
+  padding-bottom: 8px;
+}
+
+.rdp-fix .rdp-cell { text-align: center; }
+
+/* Ensure each day is a centered, clickable square */
+.rdp-fix .rdp-day {
+  width: var(--rdp-cell-size);
+  height: var(--rdp-cell-size);
+  border-radius: 10px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.rdp-fix .rdp-day:hover { background: rgba(0,0,0,0.06); }
+.rdp-fix .rdp-day_selected { background: rgba(255,122,89,0.95); color: white; }
+.rdp-fix .rdp-day_outside { opacity: .35; pointer-events: none; }
+
+.rdp-fix .rdp-caption { display: flex; align-items: center; justify-content: center; gap: 8px; margin-bottom: 6px; }
+.rdp-fix .rdp-caption_label { font-weight: 700; }
+.rdp-fix .rdp-nav_button { border-radius: 10px; }
+
+/* === Calendar (react-day-picker) fine-tuning for the Add Expense modal === */
+.rdp {
+  --rdp-cell-size: 42px;                /* day size */
+  --rdp-accent-color: var(--primary);   /* selection color */
+  --rdp-background-color: transparent;
+  --rdp-outside-opacity: 0.35;
+  margin: 0 auto;
+}
+@media (min-width: 640px) {
+  .rdp { --rdp-cell-size: 44px; }
+}
+.rdp-months { justify-content: center; }
+.rdp-month { margin: 0; }
+.rdp-caption { margin-bottom: 0.5rem; }
+.rdp-head_cell {
+  font-weight: 600;
+  color: var(--muted-foreground);
+}
+.rdp-day {
+  border-radius: 12px;
+}
+.rdp-day:hover {
+  background-color: color-mix(in oklab, var(--primary) 12%, transparent);
+}
+.rdp-day_selected,
+.rdp-day_selected:focus-visible,
+.rdp-day_selected:hover {
+  background-color: var(--primary);
+  color: var(--primary-foreground);
+}
+.rdp-day_disabled {
+  color: var(--muted-foreground);
+  opacity: 0.4;
+}
+.rdp-button_reset {
+  font: inherit; /* keep typography consistent */
+}
